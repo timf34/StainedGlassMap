@@ -1,6 +1,7 @@
 import Map from '../components/Map';
 import FilterBox from '../components/FilterBox';
 import FilterResults from '../components/FilterResults';
+import LocationList  from "../components/LocationList";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
           <div className="w-1/4 p-4">
             <FilterBox />
             <FilterResults />
+            <LocationList />
           </div>
           <div className="w-3/4">
             <Map />

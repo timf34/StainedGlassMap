@@ -1,51 +1,61 @@
+// components/Map.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabase';
+import { StainedGlassLocation } from '../types';
 
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
 export default function Map() {
-    const [map, setMap] = useState(null);
-    const [locations, setLocations] = useState([]);
+    const mapContainer = useRef(null);
+    const map = useRef<mapboxgl.Map | null>(null);
+    const [lng, setLng] = useState(-7.6921);
+    const [lat, setLat] = useState(53.1424);
+    const [zoom, setZoom] = useState(6);
+    const [locations, setLocations] = useState<StainedGlassLocation[]>([]);
 
     useEffect(() => {
-        const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-7.6921, 53.1424],
-            zoom: 6
-        });
-
-        setMap(map);
-
-        return () => map.remove();
-    }, []);
-
-    useEffect(() => {
-        async function fetchLocations() {
+        const fetchLocations = async () => {
             const { data, error } = await supabase
                 .from('stained_glass_locations')
                 .select('*');
-
             if (error) console.error('Error fetching locations:', error);
-            else setLocations(data);
-        }
+            else setLocations(data || []);
+        };
 
         fetchLocations();
     }, []);
 
     useEffect(() => {
-        if (!map || locations.length === 0) return;
+        if (map.current) return; // initialize map only once
+        map.current = new mapboxgl.Map({
+            container: mapContainer.current!,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [lng, lat],
+            zoom: zoom
+        });
+
+        // Add navigation control (the +/- zoom buttons)
+        map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    }, [lng, lat, zoom]);
+
+    useEffect(() => {
+        if (!map.current || locations.length === 0) return;
 
         locations.forEach((location) => {
+            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+                `<h3>${location.name}</h3><p>${location.artist}</p>`
+            );
+
             new mapboxgl.Marker()
                 .setLngLat([location.longitude, location.latitude])
-                .setPopup(new mapboxgl.Popup().setHTML(`<h3>${location.name}</h3><p>Artist: ${location.artist}</p>`))
-                .addTo(map);
+                .setPopup(popup)
+                .addTo(map.current!);
         });
-    }, [map, locations]);
+    }, [locations]);
 
-    return <div id="map" style={{ width: '100%', height: '100%' }} />;
+    return <div ref={mapContainer} className="map-container w-full h-full" />;
+}
