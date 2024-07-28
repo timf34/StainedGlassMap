@@ -1,3 +1,5 @@
+'use client';
+
 export default function FilterResults() {
     // This is a placeholder. You'll need to implement the actual results logic.
     return (

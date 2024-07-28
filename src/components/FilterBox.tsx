@@ -1,10 +1,12 @@
+'use client';
+
 import { useState } from 'react';
 
 export default function FilterBox() {
     const [artist, setArtist] = useState('');
     const [county, setCounty] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Handle filter submission
         console.log('Filter:', { artist, county });
