@@ -7,7 +7,7 @@ export interface StainedGlassLocation {
     longitude: number;
     year?: number;
     description?: string;
-    image_url: string;
+    thumbnail_url: string;
     additional_images?: string[];
     google_maps_url: string;
 }

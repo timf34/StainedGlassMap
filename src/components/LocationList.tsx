@@ -25,7 +25,7 @@ export default function LocationList() {
             {locations.map((location) => (
                 <div key={location.id} className="mb-4 p-4 border rounded">
                     <img
-                        src={location.image_url}
+                        src={location.thumbnail_url}
                         alt={location.name}
                         className="w-full h-40 object-cover mb-2"
                     />
