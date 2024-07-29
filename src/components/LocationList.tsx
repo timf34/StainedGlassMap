@@ -11,7 +11,7 @@ export default function LocationList() {
     useEffect(() => {
         const fetchLocations = async () => {
             const { data, error } = await supabase
-                .from('stained_glass_locations')
+                .from('stained-glass-locations')
                 .select('*');
             if (error) console.error('Error fetching locations:', error);
             else setLocations(data || []);
