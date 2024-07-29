@@ -11,7 +11,8 @@ export default function Home() {
         </div>
         <div className="flex w-full h-[calc(100vh-200px)]">
           <div className="w-1/4 p-4">
-            <FilterBox />
+            <FilterBox type="artist" placeholder="Filter by Artist" />
+            <FilterBox type="county" placeholder="Filter by County" />
             <FilterResults />
             <LocationList />
           </div>
