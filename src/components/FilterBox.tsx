@@ -1,42 +1,39 @@
 'use client';
 
 import { useState } from 'react';
+import styles from '../app/globals.css';
+import Image from 'next/image';
 
-export default function FilterBox() {
-    const [artist, setArtist] = useState('');
-    const [county, setCounty] = useState('');
+interface FilterBoxProps {
+    type: 'artist' | 'county';
+    placeholder: string;
+}
+
+export default function FilterBox({ type, placeholder }: FilterBoxProps) {
+    const [value, setValue] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle filter submission
-        console.log('Filter:', { artist, county });
+        console.log(`Filter ${type}:`, value);
     };
 
     return (
-        <form onSubmit={handleSubmit} className="mb-4">
-            <div className="mb-4">
-                <label htmlFor="artist" className="block mb-2">Artist</label>
-                <input
-                    type="text"
-                    id="artist"
-                    value={artist}
-                    onChange={(e) => setArtist(e.target.value)}
-                    className="w-full p-2 border rounded"
-                />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="county" className="block mb-2">County</label>
-                <input
-                    type="text"
-                    id="county"
-                    value={county}
-                    onChange={(e) => setCounty(e.target.value)}
-                    className="w-full p-2 border rounded"
-                />
-            </div>
-            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
-                Apply Filters
-            </button>
+        <form onSubmit={handleSubmit} className={styles.filterBox}>
+            <input
+                type="text"
+                id={type}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder={placeholder}
+                className={styles.filterInput}
+            />
+            <Image
+                src="./icons/downChevron.svg"
+                alt="Open filter"
+                width={24}
+                height={24}
+                className={styles.chevronIcon}
+            />
         </form>
     );
 }
