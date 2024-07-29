@@ -22,3 +22,34 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.filterBox {
+  display: flex;
+  width: 240px;
+  padding: var(--sds-size-space-300) var(--sds-size-space-400);
+  align-items: center;
+  gap: var(--sds-size-space-200);
+  border-radius: 10px;
+  border: var(--sds-size-stroke-border) solid var(--sds-color-border-default-default);
+  opacity: var(--sds-size-stroke-border);
+  background: var(--sds-color-background-default-default);
+}
+
+.filterInput {
+  flex: 1 0 0;
+  color: var(--sds-color-text-neutral-tertiary);
+  font-family: var(--sds-typography-body-font-family);
+  font-size: var(--sds-typography-body-size-medium);
+  font-style: normal;
+  font-weight: var(--sds-typography-body-font-weight-regular);
+  line-height: 100%;
+  opacity: var(--sds-size-stroke-border);
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.chevronIcon {
+  width: 24px;
+  height: 24px;
+}
