@@ -8,7 +8,7 @@ import DropdownList from './DropdownList';
 interface FilterBoxProps {
     type: 'artist' | 'county';
     placeholder: string;
-    options: string[]; // Add this prop for the list of options
+    options: string[];
 }
 
 export default function FilterBox({ type, placeholder, options }: FilterBoxProps) {
@@ -23,7 +23,7 @@ export default function FilterBox({ type, placeholder, options }: FilterBoxProps
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-        setIsOpen(true);
+        if (!isOpen) setIsOpen(true);
     };
 
     const handleOptionSelect = (option: string) => {
@@ -56,6 +56,7 @@ export default function FilterBox({ type, placeholder, options }: FilterBoxProps
                     id={type}
                     value={value}
                     onChange={handleInputChange}
+                    onFocus={() => setIsOpen(true)}
                     placeholder={placeholder}
                     className="filterInput w-full"
                     ref={inputRef}
@@ -68,7 +69,7 @@ export default function FilterBox({ type, placeholder, options }: FilterBoxProps
                     className="chevronIcon"
                     onClick={() => setIsOpen(!isOpen)}
                 />
-                {isOpen && filteredOptions.length > 0 && (
+                {isOpen && (
                     <DropdownList options={filteredOptions} onSelect={handleOptionSelect} />
                 )}
             </div>
