@@ -13,7 +13,6 @@ export default function Home() {
           <div className="w-1/4 p-4">
             <FilterBox type="artist" placeholder="Filter by Artist" />
             <FilterBox type="county" placeholder="Filter by County" />
-            <FilterResults />
             <LocationList />
           </div>
           <div className="w-3/4">
