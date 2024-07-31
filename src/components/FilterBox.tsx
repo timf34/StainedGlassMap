@@ -18,22 +18,25 @@ export default function FilterBox({ type, placeholder }: FilterBoxProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={styles.filterBox}>
-            <input
-                type="text"
-                id={type}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder={placeholder}
-                className={styles.filterInput}
-            />
-            <Image
-                src="./icons/downChevron.svg"
-                alt="Open filter"
-                width={24}
-                height={24}
-                className={styles.chevronIcon}
-            />
+        <form onSubmit={handleSubmit} className="flex w-60 filterBox">
+            <div className="w-full cursor-pointer">
+                <input
+                    type="text"
+                    id={type}
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    placeholder={placeholder}
+                    className="filterInput w-full"
+                />
+                <Image
+                    src="./icons/downChevron.svg"
+                    alt="Open filter"
+                    width={24}
+                    height={24}
+                    className="chevronIcon"
+                />
+            </div>
         </form>
+
     );
 }
