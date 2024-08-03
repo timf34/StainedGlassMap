@@ -14,19 +14,19 @@ export default function Home() {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
-            <div className="z-10 w-full items-center justify-between text-sm">
-                <h1 className="text-2xl md:text-4xl font-light text-center mb-4 font-montserrat italic">Stained Glass Map of Ireland</h1>
-            </div>
-            <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} w-full h-[calc(100vh-200px)]`}>
-                <div className={isMobile ? 'w-full mb-4' : 'w-1/4 p-4'}>
+        <main className="h-screen flex flex-col">
+            <header className="w-full p-4 bg-white">
+                <h1 className="text-2xl md:text-4xl font-light font-montserrat italic">Stained Glass Map of Ireland</h1>
+            </header>
+            <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'}`}>
+                <aside className={`${isMobile ? 'w-full' : 'w-1/5'} p-4 bg-gray-50 overflow-y-auto`}>
                     <FilterBox type="artist" placeholder="Filter by Artist" options={artistOptions}/>
                     <FilterBox type="county" placeholder="Filter by County" options={countyOptions}/>
                     <LocationList/>
-                </div>
-                <div className={isMobile ? 'w-full h-[50vh]' : 'w-3/4'}>
+                </aside>
+                <section className={`${isMobile ? 'w-full h-[50vh]' : 'w-3/4'}`}>
                     <Map/>
-                </div>
+                </section>
             </div>
         </main>
     );

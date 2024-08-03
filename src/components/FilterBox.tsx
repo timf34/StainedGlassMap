@@ -43,7 +43,7 @@ export default function FilterBox({ type, placeholder, options }: FilterBoxProps
     };
 
     return (
-        <FormControl sx={{ m: 1, width: isMobile ? '100%' : 300 }}>
+        <FormControl sx={{ m: 1, width: '100%' }}>
             <InputLabel id={`${type}-multiple-checkbox-label`}>{placeholder}</InputLabel>
             <Select
                 labelId={`${type}-multiple-checkbox-label`}
