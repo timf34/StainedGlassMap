@@ -51,6 +51,7 @@ export default function FilterBox({ type, placeholder, options }: FilterBoxProps
                 input={<OutlinedInput label={placeholder} />}
                 renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
+                sx={{ borderRadius: '16px' }}
             >
                 {options.map((option) => (
                     <MenuItem key={option} value={option}>
