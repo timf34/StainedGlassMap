@@ -1,11 +1,11 @@
 -- Create Counties table
-CREATE TABLE Counties (
+CREATE TABLE counties (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
 -- Create Artists table
-CREATE TABLE Artists (
+CREATE TABLE artists (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     biography TEXT,
@@ -14,7 +14,7 @@ CREATE TABLE Artists (
 );
 
 -- Create Locations table
-CREATE TABLE Locations (
+CREATE TABLE locations (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255),
@@ -26,7 +26,7 @@ CREATE TABLE Locations (
 );
 
 -- Create Stained Glass Pieces table
-CREATE TABLE Stained_Glass_Pieces (
+CREATE TABLE stained_glass_pieces (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     location_id INTEGER,
