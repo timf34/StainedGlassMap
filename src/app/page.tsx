@@ -20,12 +20,12 @@ export default function Home() {
             </header>
             <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'}`}>
                 <aside className={`${isMobile ? 'w-full' : 'w-1/5'} p-4 bg-gray-50 overflow-y-auto`}>
-                    <FilterBox type="artist" placeholder="Filter by Artist" options={artistOptions}/>
-                    <FilterBox type="county" placeholder="Filter by County" options={countyOptions}/>
-                    <LocationList/>
+                    <FilterBox tableName="artists" placeholder="Filter by Artist"/>
+                    <FilterBox tableName="counties" placeholder="Filter by County"/>
+                    {/*<LocationList/>*/}
                 </aside>
                 <section className={`${isMobile ? 'w-full h-[50vh]' : 'w-4/5'} p-4`}>
-                    <Map/>
+                    {/*<Map/>*/}
                 </section>
             </div>
         </main>
