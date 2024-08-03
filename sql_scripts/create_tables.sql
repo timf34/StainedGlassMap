@@ -35,8 +35,6 @@ CREATE TABLE stained_glass_pieces (
     small_thumbnail_url VARCHAR(255),
     high_quality_url VARCHAR(255),
     description TEXT,
-    latitude FLOAT,
-    longitude FLOAT,
     FOREIGN KEY (location_id) REFERENCES Locations(id),
     FOREIGN KEY (artist_id) REFERENCES Artists(id)
 );
