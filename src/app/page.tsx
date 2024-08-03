@@ -1,10 +1,8 @@
 import Map from '../components/Map';
 import FilterBox from '../components/FilterBox';
-import FilterResults from '../components/DropdownList';
 import LocationList from "../components/LocationList";
 
 export default function Home() {
-
     const artistOptions = ['Artist 1', 'Artist 2', 'Artist 3']; // Replace with your actual options
     const countyOptions = ['County 1', 'County 2', 'County 3']; // Replace with your actual options
 

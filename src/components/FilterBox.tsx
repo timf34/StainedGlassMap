@@ -1,9 +1,25 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import styles from '../app/globals.css';
-import Image from 'next/image';
-import DropdownList from './DropdownList';
+import React from 'react';
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
 
 interface FilterBoxProps {
     type: 'artist' | 'county';
@@ -12,67 +28,37 @@ interface FilterBoxProps {
 }
 
 export default function FilterBox({ type, placeholder, options }: FilterBoxProps) {
-    const [value, setValue] = useState('');
-    const [isOpen, setIsOpen] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const [selected, setSelected] = React.useState<string[]>([]);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log(`Filter ${type}:`, value);
+    const handleChange = (event: SelectChangeEvent<typeof selected>) => {
+        const {
+            target: { value },
+        } = event;
+        setSelected(
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
-        if (!isOpen) setIsOpen(true);
-    };
-
-    const handleOptionSelect = (option: string) => {
-        setValue(option);
-        setIsOpen(false);
-    };
-
-    const handleClickOutside = (e: MouseEvent) => {
-        if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
-            setIsOpen(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    const filteredOptions = options.filter(option =>
-        option.toLowerCase().includes(value.toLowerCase())
-    );
 
     return (
-        <form onSubmit={handleSubmit} className="flex w-60 filterBox relative">
-            <div className="w-full cursor-pointer">
-                <input
-                    type="text"
-                    id={type}
-                    value={value}
-                    onChange={handleInputChange}
-                    onFocus={() => setIsOpen(true)}
-                    placeholder={placeholder}
-                    className="filterInput w-full"
-                    ref={inputRef}
-                />
-                <Image
-                    src="./icons/downChevron.svg"
-                    alt="Open filter"
-                    width={24}
-                    height={24}
-                    className="chevronIcon"
-                    onClick={() => setIsOpen(!isOpen)}
-                />
-                {isOpen && (
-                    <DropdownList options={filteredOptions} onSelect={handleOptionSelect} />
-                )}
-            </div>
-        </form>
+        <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id={`${type}-multiple-checkbox-label`}>{placeholder}</InputLabel>
+            <Select
+                labelId={`${type}-multiple-checkbox-label`}
+                id={`${type}-multiple-checkbox`}
+                multiple
+                value={selected}
+                onChange={handleChange}
+                input={<OutlinedInput label={placeholder} />}
+                renderValue={(selected) => selected.join(', ')}
+                MenuProps={MenuProps}
+            >
+                {options.map((option) => (
+                    <MenuItem key={option} value={option}>
+                        <Checkbox checked={selected.indexOf(option) > -1} />
+                        <ListItemText primary={option} />
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }
