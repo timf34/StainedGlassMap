@@ -47,11 +47,3 @@ body {
     color: #333;
     appearance: none; /* Remove default arrow in dropdown */
 }
-
-.chevronIcon {
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    transform: translateY(-50%);
-    pointer-events: none; /* Ensure icon doesn't intercept clicks */
-}
