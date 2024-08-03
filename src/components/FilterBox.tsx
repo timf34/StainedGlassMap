@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,6 +30,8 @@ interface FilterBoxProps {
 
 export default function FilterBox({ type, placeholder, options }: FilterBoxProps) {
     const [selected, setSelected] = React.useState<string[]>([]);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleChange = (event: SelectChangeEvent<typeof selected>) => {
         const {
@@ -40,7 +43,7 @@ export default function FilterBox({ type, placeholder, options }: FilterBoxProps
     };
 
     return (
-        <FormControl sx={{ m: 1, width: 300 }}>
+        <FormControl sx={{ m: 1, width: isMobile ? '100%' : 300 }}>
             <InputLabel id={`${type}-multiple-checkbox-label`}>{placeholder}</InputLabel>
             <Select
                 labelId={`${type}-multiple-checkbox-label`}
