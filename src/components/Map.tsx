@@ -33,7 +33,7 @@ export default function Map() {
         if (map.current) return; // initialize map only once
         map.current = new mapboxgl.Map({
             container: mapContainer.current!,
-            style: 'mapbox://styles/mapbox/streets-v11',
+            style: 'mapbox://styles/timf34/clzefs8u900ce01qt78dxdwpv',
             center: [lng, lat],
             zoom: zoom
         });
