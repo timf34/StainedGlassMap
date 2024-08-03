@@ -24,7 +24,7 @@ export default function Home() {
                     <FilterBox type="county" placeholder="Filter by County" options={countyOptions}/>
                     <LocationList/>
                 </aside>
-                <section className={`${isMobile ? 'w-full h-[50vh]' : 'w-4/5'}`}>
+                <section className={`${isMobile ? 'w-full h-[50vh]' : 'w-4/5'} p-4`}>
                     <Map/>
                 </section>
             </div>

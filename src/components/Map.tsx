@@ -57,5 +57,9 @@ export default function Map() {
         });
     }, [locations]);
 
-    return <div ref={mapContainer} className="map-container w-full h-full" />;
+    return (
+        <div className="h-full w-full">
+            <div ref={mapContainer} className="map-container w-full h-full rounded-xl shadow-xl" /> {/* Add rounded corners and shadow */}
+        </div>
+    );
 }
