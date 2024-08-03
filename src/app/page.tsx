@@ -15,8 +15,8 @@ export default function Home() {
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
-            <div className="z-10 w-full items-center justify-between font-mono text-sm">
-                <h1 className="text-2xl md:text-4xl font-bold text-center mb-4">Stained Glass Map of Ireland</h1>
+            <div className="z-10 w-full items-center justify-between text-sm">
+                <h1 className="text-2xl md:text-4xl font-light text-center mb-4 font-montserrat italic">Stained Glass Map of Ireland</h1>
             </div>
             <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} w-full h-[calc(100vh-200px)]`}>
                 <div className={isMobile ? 'w-full mb-4' : 'w-1/4 p-4'}>
