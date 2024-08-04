@@ -4,36 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { supabase } from '../lib/supabase';
+import {Artist, Location, StainedGlassPiece, LocationWithDetails} from "@/types";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
-interface Artist {
-    id: number;
-    name: string;
-}
-
-interface StainedGlassPiece {
-    id: number;
-    title: string;
-    small_thumbnail_url: string;
-    artists: Artist[];
-}
-
-interface Location {
-    id: number;
-    name: string;
-    address: string;
-    google_maps_link: string;
-    latitude: number | null;
-    longitude: number | null;
-    county: { name: string };
-    stained_glass_pieces: StainedGlassPiece[];
-}
 
 interface MapProps {
     selectedArtists: string[];
     selectedCounties: string[];
-    onLocationClick: (location: Location) => void;
+    onLocationClick: (location: LocationWithDetails) => void;
 }
 
 export default function Map({ selectedArtists, selectedCounties, onLocationClick }: MapProps) {
