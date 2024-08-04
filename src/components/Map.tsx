@@ -113,7 +113,9 @@ export default function Map() {
                 </div>`
             );
 
-            new mapboxgl.Marker()
+            new mapboxgl.Marker({
+                color: '#74b6c4',
+            })
                 .setLngLat([location.longitude, location.latitude])
                 .setPopup(popup)
                 .addTo(map.current!);
