@@ -11,3 +11,11 @@ export interface StainedGlassLocation {
     additional_images?: string[];
     google_maps_url: string;
 }
+
+export interface LocationWithDetails {
+    id: number;
+    name: string;
+    county: string;
+    artist: string;
+    thumbnail_url: string;
+}

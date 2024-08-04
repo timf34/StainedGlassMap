@@ -22,7 +22,7 @@ export default function Home() {
                 <aside className={`${isMobile ? 'w-full' : 'w-1/5'} p-4 bg-gray-50 overflow-y-auto`}>
                     <FilterBox tableName="artists" placeholder="Filter by Artist"/>
                     <FilterBox tableName="counties" placeholder="Filter by County"/>
-                    {/*<LocationList/>*/}
+                    <LocationList/>
                 </aside>
                 <section className={`${isMobile ? 'w-full h-[50vh]' : 'w-4/5'} p-4`}>
                     {/*<Map/>*/}
