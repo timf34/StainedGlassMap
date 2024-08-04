@@ -5,9 +5,31 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { supabase } from '../lib/supabase';
-import { StainedGlassLocation } from '../types';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
+
+interface Artist {
+    id: number;
+    name: string;
+}
+
+interface StainedGlassPiece {
+    id: number;
+    title: string;
+    small_thumbnail_url: string;
+    artists: Artist[];
+}
+
+interface Location {
+    id: number;
+    name: string;
+    address: string;
+    google_maps_link: string;
+    latitude: number;
+    longitude: number;
+    county: { name: string };
+    stained_glass_pieces: StainedGlassPiece[];
+}
 
 export default function Map() {
     const mapContainer = useRef(null);
@@ -15,15 +37,40 @@ export default function Map() {
     const [lng, setLng] = useState(-7.6921);
     const [lat, setLat] = useState(53.1424);
     const [zoom, setZoom] = useState(6);
-    const [locations, setLocations] = useState<StainedGlassLocation[]>([]);
+    const [locations, setLocations] = useState<Location[]>([]);
 
     useEffect(() => {
         const fetchLocations = async () => {
             const { data, error } = await supabase
-                .from('stained-glass-locations')
-                .select('*');
-            if (error) console.error('Error fetching locations:', error);
-            else setLocations(data || []);
+                .from('locations')
+                .select(`
+                    id,
+                    name,
+                    address,
+                    google_maps_link,
+                    latitude,
+                    longitude,
+                    counties (name),
+                    stained_glass_pieces (
+                        id,
+                        title,
+                        small_thumbnail_url,
+                        artists (id, name)
+                    )
+                `);
+            if (error) {
+                console.error('Error fetching locations:', error);
+            } else {
+                // Ensure the data structure is consistent
+                const formattedData = data?.map((location: any) => ({
+                    ...location,
+                    stained_glass_pieces: location.stained_glass_pieces.map((piece: any) => ({
+                        ...piece,
+                        artists: Array.isArray(piece.artists) ? piece.artists : []
+                    }))
+                })) || [];
+                setLocations(formattedData);
+            }
         };
 
         fetchLocations();
@@ -38,7 +85,6 @@ export default function Map() {
             zoom: zoom
         });
 
-        // Add navigation control (the +/- zoom buttons)
         map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
     }, [lng, lat, zoom]);
 
@@ -46,8 +92,21 @@ export default function Map() {
         if (!map.current || locations.length === 0) return;
 
         locations.forEach((location) => {
+            const artists = [...new Set(location.stained_glass_pieces.flatMap(piece =>
+                Array.isArray(piece.artists) ? piece.artists.map(artist => artist.name) : []
+            ))];
             const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-                `<h3>${location.name}</h3><p>${location.artist}</p>`
+                `<h3>${location.name}</h3>
+                <p>Artists: ${artists.join(', ')}</p>
+                <a href="${location.google_maps_link}" target="_blank">View on Google Maps</a>
+                <div>
+                    ${location.stained_glass_pieces.map(piece => `
+                        <div key="${piece.id}">
+                            <img src="${piece.small_thumbnail_url}" alt="${piece.title}" width="100" />
+                            <p>${piece.title}</p>
+                        </div>
+                    `).join('')}
+                </div>`
             );
 
             new mapboxgl.Marker()
@@ -59,7 +118,7 @@ export default function Map() {
 
     return (
         <div className="h-full w-full">
-            <div ref={mapContainer} className="map-container w-full h-full rounded-xl shadow-xl" /> {/* Add rounded corners and shadow */}
+            <div ref={mapContainer} className="map-container w-full h-full rounded-xl shadow-xl" />
         </div>
     );
 }

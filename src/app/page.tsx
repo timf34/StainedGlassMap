@@ -25,7 +25,7 @@ export default function Home() {
                     <LocationList/>
                 </aside>
                 <section className={`${isMobile ? 'w-full h-[50vh]' : 'w-4/5'} p-4`}>
-                    {/*<Map/>*/}
+                    <Map/>
                 </section>
             </div>
         </main>
