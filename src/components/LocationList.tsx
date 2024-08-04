@@ -34,15 +34,17 @@ export default function LocationList({ selectedArtists, selectedCounties, onLoca
             if (error) {
                 console.error('Error fetching locations:', error);
             } else {
-                const transformedData = data.map((location) => ({
+                const transformedData = data.map((location: any) => ({
                     id: location.id,
                     name: location.name,
-                    county: location.counties.name,
-                    artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
-                    thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
                     address: location.address,
                     google_maps_link: location.google_maps_link,
+                    thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    county: location.counties.name, // Assuming counties is a single object
                     stained_glass_pieces: location.stained_glass_pieces,
+                    artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
                 }));
                 setLocations(transformedData || []);
             }
@@ -53,7 +55,7 @@ export default function LocationList({ selectedArtists, selectedCounties, onLoca
 
     const filteredLocations = locations.filter((location) => {
         const matchesArtist = selectedArtists.length === 0 || selectedArtists.includes(location.artist);
-        const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county);
+        const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county.name);
         return matchesArtist && matchesCounty;
     });
 
@@ -68,7 +70,7 @@ export default function LocationList({ selectedArtists, selectedCounties, onLoca
                     />
                     <h3 className="font-bold">{location.name}</h3>
                     <p>{location.artist}</p>
-                    <p>{location.county}</p>
+                    <p>{location.county.name}</p>
                 </div>
             ))}
         </div>
