@@ -5,13 +5,16 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Map from '../components/Map';
 import FilterBox from '../components/FilterBox';
-import LocationList from "../components/LocationList";
+import LocationList from '../components/LocationList';
+import LocationModal from '../components/LocationModal';
+import {LocationWithDetails} from '../types/index.ts';
 
 export default function Home() {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [selectedArtists, setSelectedArtists] = useState<string[]>([]);
     const [selectedCounties, setSelectedCounties] = useState<string[]>([]);
+    const [selectedLocation, setSelectedLocation] = useState<LocationWithDetails | null>(null);
 
     const handleFilterChange = (type: 'artists' | 'counties', values: string[]) => {
         if (type === 'artists') {
@@ -19,6 +22,14 @@ export default function Home() {
         } else {
             setSelectedCounties(values);
         }
+    };
+
+    const handleLocationClick = (location: LocationWithDetails) => {
+        setSelectedLocation(location);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedLocation(null);
     };
 
     return (
@@ -44,6 +55,7 @@ export default function Home() {
                         <LocationList
                             selectedArtists={selectedArtists}
                             selectedCounties={selectedCounties}
+                            onLocationClick={handleLocationClick}
                         />
                     </div>
                 </aside>
@@ -51,9 +63,17 @@ export default function Home() {
                     <Map
                         selectedArtists={selectedArtists}
                         selectedCounties={selectedCounties}
+                        onLocationClick={handleLocationClick}
                     />
                 </section>
             </div>
+            {selectedLocation && (
+                <LocationModal
+                    location={selectedLocation}
+                    open={Boolean(selectedLocation)}
+                    onClose={handleCloseModal}
+                />
+            )}
         </main>
     );
 }

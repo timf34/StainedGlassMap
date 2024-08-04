@@ -33,9 +33,10 @@ interface Location {
 interface MapProps {
     selectedArtists: string[];
     selectedCounties: string[];
+    onLocationClick: (location: Location) => void;
 }
 
-export default function Map({ selectedArtists, selectedCounties }: MapProps) {
+export default function Map({ selectedArtists, selectedCounties, onLocationClick }: MapProps) {
     const mapContainer = useRef(null);
     const map = useRef<mapboxgl.Map | null>(null);
     const [lng, setLng] = useState(-7.6921);
@@ -74,6 +75,8 @@ export default function Map({ selectedArtists, selectedCounties }: MapProps) {
                     thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
                     latitude: location.latitude,
                     longitude: location.longitude,
+                    address: location.address,
+                    google_maps_link: location.google_maps_link,
                 }));
                 setLocations(transformedData || []);
             }
@@ -133,10 +136,14 @@ export default function Map({ selectedArtists, selectedCounties }: MapProps) {
                     .setPopup(popup)
                     .addTo(map.current!);
 
+                marker.getElement().addEventListener('click', () => {
+                    onLocationClick(location);
+                });
+
                 markers.current.push(marker);
             }
         });
-    }, [locations, selectedArtists, selectedCounties]);
+    }, [locations, selectedArtists, selectedCounties, onLocationClick]);
 
     return (
         <div className="h-full w-full">

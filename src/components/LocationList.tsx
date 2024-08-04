@@ -7,9 +7,10 @@ import { LocationWithDetails } from '../types';
 interface LocationListProps {
     selectedArtists: string[];
     selectedCounties: string[];
+    onLocationClick: (location: LocationWithDetails) => void;
 }
 
-export default function LocationList({ selectedArtists, selectedCounties }: LocationListProps) {
+export default function LocationList({ selectedArtists, selectedCounties, onLocationClick }: LocationListProps) {
     const [locations, setLocations] = useState<LocationWithDetails[]>([]);
 
     useEffect(() => {
@@ -39,6 +40,9 @@ export default function LocationList({ selectedArtists, selectedCounties }: Loca
                     county: location.counties.name,
                     artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
                     thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
+                    address: location.address,
+                    google_maps_link: location.google_maps_link,
+                    stained_glass_pieces: location.stained_glass_pieces,
                 }));
                 setLocations(transformedData || []);
             }
@@ -56,7 +60,7 @@ export default function LocationList({ selectedArtists, selectedCounties }: Loca
     return (
         <div>
             {filteredLocations.map((location) => (
-                <div key={location.id} className="mb-4 p-4 border rounded">
+                <div key={location.id} className="mb-4 p-4 border rounded cursor-pointer" onClick={() => onLocationClick(location)}>
                     <img
                         src={location.thumbnail_url}
                         alt={location.name}
