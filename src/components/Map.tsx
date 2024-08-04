@@ -83,6 +83,10 @@ export default function Map() {
             style: 'mapbox://styles/timf34/clzefs8u900ce01qt78dxdwpv',
             center: [lng, lat],
             zoom: zoom
+            // maxBounds: [
+            //     [-12, 50], // Southwest coordinates
+            //     [-3, 58]   // Northeast coordinates
+            // ]
         });
 
         map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
