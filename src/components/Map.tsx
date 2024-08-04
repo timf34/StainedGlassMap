@@ -126,7 +126,9 @@ export default function Map({ selectedArtists, selectedCounties }: MapProps) {
                     </div>`
                 );
 
-                const marker = new mapboxgl.Marker()
+                const marker = new mapboxgl.Marker({
+                    color: '#74b6c4',
+                })
                     .setLngLat([location.longitude, location.latitude])
                     .setPopup(popup)
                     .addTo(map.current!);
