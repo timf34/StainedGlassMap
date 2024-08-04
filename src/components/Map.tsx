@@ -1,4 +1,3 @@
-// components/Map.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -31,13 +30,19 @@ interface Location {
     stained_glass_pieces: StainedGlassPiece[];
 }
 
-export default function Map() {
+interface MapProps {
+    selectedArtists: string[];
+    selectedCounties: string[];
+}
+
+export default function Map({ selectedArtists, selectedCounties }: MapProps) {
     const mapContainer = useRef(null);
     const map = useRef<mapboxgl.Map | null>(null);
     const [lng, setLng] = useState(-7.6921);
     const [lat, setLat] = useState(53.1424);
     const [zoom, setZoom] = useState(6);
     const [locations, setLocations] = useState<Location[]>([]);
+    const markers = useRef<mapboxgl.Marker[]>([]);
 
     useEffect(() => {
         const fetchLocations = async () => {
@@ -61,9 +66,9 @@ export default function Map() {
             if (error) {
                 console.error('Error fetching locations:', error);
             } else {
-                // Ensure the data structure is consistent
                 const formattedData = data?.map((location: any) => ({
                     ...location,
+                    county: location.counties?.name || '',
                     stained_glass_pieces: location.stained_glass_pieces.map((piece: any) => ({
                         ...piece,
                         artists: Array.isArray(piece.artists) ? piece.artists : []
@@ -83,10 +88,6 @@ export default function Map() {
             style: 'mapbox://styles/timf34/clzefs8u900ce01qt78dxdwpv',
             center: [lng, lat],
             zoom: zoom
-            // maxBounds: [
-            //     [-12, 50], // Southwest coordinates
-            //     [-3, 58]   // Northeast coordinates
-            // ]
         });
 
         map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -95,7 +96,20 @@ export default function Map() {
     useEffect(() => {
         if (!map.current || locations.length === 0) return;
 
-        locations.forEach((location) => {
+        // Clear existing markers
+        markers.current.forEach(marker => marker.remove());
+        markers.current = [];
+
+        const filteredLocations = locations.filter((location) => {
+            const artists = [...new Set(location.stained_glass_pieces.flatMap(piece =>
+                Array.isArray(piece.artists) ? piece.artists.map(artist => artist.name) : []
+            ))];
+            const matchesArtist = selectedArtists.length === 0 || artists.some(artist => selectedArtists.includes(artist));
+            const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county);
+            return matchesArtist && matchesCounty;
+        });
+
+        filteredLocations.forEach((location) => {
             const artists = [...new Set(location.stained_glass_pieces.flatMap(piece =>
                 Array.isArray(piece.artists) ? piece.artists.map(artist => artist.name) : []
             ))];
@@ -113,14 +127,14 @@ export default function Map() {
                 </div>`
             );
 
-            new mapboxgl.Marker({
-                color: '#74b6c4',
-            })
+            const marker = new mapboxgl.Marker()
                 .setLngLat([location.longitude, location.latitude])
                 .setPopup(popup)
                 .addTo(map.current!);
+
+            markers.current.push(marker);
         });
-    }, [locations]);
+    }, [locations, selectedArtists, selectedCounties]);
 
     return (
         <div className="h-full w-full">
