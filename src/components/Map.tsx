@@ -57,24 +57,22 @@ export default function Map({ selectedArtists, selectedCounties }: MapProps) {
                     longitude,
                     counties (name),
                     stained_glass_pieces (
-                        id,
                         title,
                         small_thumbnail_url,
-                        artists (id, name)
+                        artists (name)
                     )
                 `);
             if (error) {
                 console.error('Error fetching locations:', error);
             } else {
-                const formattedData = data?.map((location: any) => ({
-                    ...location,
-                    county: location.counties?.name || '',
-                    stained_glass_pieces: location.stained_glass_pieces.map((piece: any) => ({
-                        ...piece,
-                        artists: Array.isArray(piece.artists) ? piece.artists : []
-                    }))
-                })) || [];
-                setLocations(formattedData);
+                const transformedData = data.map((location) => ({
+                    id: location.id,
+                    name: location.name,
+                    county: location.counties.name,
+                    artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
+                    thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
+                }));
+                setLocations(transformedData || []);
             }
         };
 
@@ -101,21 +99,17 @@ export default function Map({ selectedArtists, selectedCounties }: MapProps) {
         markers.current = [];
 
         const filteredLocations = locations.filter((location) => {
-            const artists = [...new Set(location.stained_glass_pieces.flatMap(piece =>
-                Array.isArray(piece.artists) ? piece.artists.map(artist => artist.name) : []
-            ))];
-            const matchesArtist = selectedArtists.length === 0 || artists.some(artist => selectedArtists.includes(artist));
+            const matchesArtist = selectedArtists.length === 0 || selectedArtists.includes(location.artist);
             const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county);
             return matchesArtist && matchesCounty;
         });
 
         filteredLocations.forEach((location) => {
-            const artists = [...new Set(location.stained_glass_pieces.flatMap(piece =>
-                Array.isArray(piece.artists) ? piece.artists.map(artist => artist.name) : []
-            ))];
+            const artistNames = location.stained_glass_pieces
+                .flatMap(piece => piece.artists.map(artist => artist.name));
             const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
                 `<h3>${location.name}</h3>
-                <p>Artists: ${artists.join(', ')}</p>
+                <p>Artists: ${artistNames.join(', ')}</p>
                 <a href="${location.google_maps_link}" target="_blank">View on Google Maps</a>
                 <div>
                     ${location.stained_glass_pieces.map(piece => `
