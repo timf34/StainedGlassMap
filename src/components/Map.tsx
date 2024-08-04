@@ -24,8 +24,8 @@ interface Location {
     name: string;
     address: string;
     google_maps_link: string;
-    latitude: number;
-    longitude: number;
+    latitude: number | null;
+    longitude: number | null;
     county: { name: string };
     stained_glass_pieces: StainedGlassPiece[];
 }
@@ -69,8 +69,11 @@ export default function Map({ selectedArtists, selectedCounties }: MapProps) {
                     id: location.id,
                     name: location.name,
                     county: location.counties.name,
+                    stained_glass_pieces: location.stained_glass_pieces || [],
                     artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
                     thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
+                    latitude: location.latitude,
+                    longitude: location.longitude,
                 }));
                 setLocations(transformedData || []);
             }
@@ -105,28 +108,31 @@ export default function Map({ selectedArtists, selectedCounties }: MapProps) {
         });
 
         filteredLocations.forEach((location) => {
-            const artistNames = location.stained_glass_pieces
-                .flatMap(piece => piece.artists.map(artist => artist.name));
-            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-                `<h3>${location.name}</h3>
-                <p>Artists: ${artistNames.join(', ')}</p>
-                <a href="${location.google_maps_link}" target="_blank">View on Google Maps</a>
-                <div>
-                    ${location.stained_glass_pieces.map(piece => `
-                        <div key="${piece.id}">
-                            <img src="${piece.small_thumbnail_url}" alt="${piece.title}" width="100" />
-                            <p>${piece.title}</p>
-                        </div>
-                    `).join('')}
-                </div>`
-            );
+            if (location.longitude != null && location.latitude != null) {
+                const artistNames = location.stained_glass_pieces.flatMap(piece =>
+                    Array.isArray(piece.artists) ? piece.artists.map(artist => artist.name) : []
+                );
+                const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+                    `<h3>${location.name}</h3>
+                    <p>Artists: ${artistNames.join(', ')}</p>
+                    <a href="${location.google_maps_link}" target="_blank">View on Google Maps</a>
+                    <div>
+                        ${location.stained_glass_pieces.map(piece => `
+                            <div key="${piece.id}">
+                                <img src="${piece.small_thumbnail_url}" alt="${piece.title}" width="100" />
+                                <p>${piece.title}</p>
+                            </div>
+                        `).join('')}
+                    </div>`
+                );
 
-            const marker = new mapboxgl.Marker()
-                .setLngLat([location.longitude, location.latitude])
-                .setPopup(popup)
-                .addTo(map.current!);
+                const marker = new mapboxgl.Marker()
+                    .setLngLat([location.longitude, location.latitude])
+                    .setPopup(popup)
+                    .addTo(map.current!);
 
-            markers.current.push(marker);
+                markers.current.push(marker);
+            }
         });
     }, [locations, selectedArtists, selectedCounties]);
 
