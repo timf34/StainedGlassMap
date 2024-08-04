@@ -7,7 +7,7 @@ import Map from '../components/Map';
 import FilterBox from '../components/FilterBox';
 import LocationList from '../components/LocationList';
 import LocationModal from '../components/LocationModal';
-import {LocationWithDetails} from '../types/index.ts';
+import {LocationWithDetails} from '@/types';
 
 export default function Home() {
     const theme = useTheme();
