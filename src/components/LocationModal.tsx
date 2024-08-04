@@ -12,14 +12,17 @@ interface LocationModalProps {
     onClose: () => void;
 }
 
+// TODO: "artists" is a bit confusing here... its just because our table is named artists I think...
+
 const LocationModal: React.FC<LocationModalProps> = ({ location, open, onClose }) => {
     const renderStainedGlassPieces = () => {
-        const artists = Array.from(new Set(location.stained_glass_pieces.flatMap(piece => piece.artists.name)));
+        console.log("here now", location.stained_glass_pieces);
+        const artists = Array.from(new Set(location.stained_glass_pieces.flatMap(piece => piece.artist.name)));
         return artists.map((artist, index) => (
             <div key={index}>
-                <Typography variant="h6">{artist}</Typography>
+                <Typography variant="h6">{artists}</Typography>
                 <Grid container spacing={2}>
-                    {location.stained_glass_pieces.filter(piece => piece.artists.name === artist).map(piece => (
+                    {location.stained_glass_pieces.filter(piece => piece.artist.name === artist).map(piece => (
                         <Grid item xs={6} sm={4} md={3} key={piece.title}>
                             <img src={piece.small_thumbnail_url} alt={piece.title} style={{ width: '100%' }} />
                             <Typography>{piece.title}</Typography>
