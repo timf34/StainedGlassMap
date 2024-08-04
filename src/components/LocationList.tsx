@@ -45,7 +45,7 @@ export default function LocationList() {
     }, []);
 
     return (
-        <div className="overflow-y-auto h-full">
+        <div>
             {locations.map((location) => (
                 <div key={location.id} className="mb-4 p-4 border rounded">
                     <img
