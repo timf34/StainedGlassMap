@@ -1,11 +1,15 @@
-// components/LocationList.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { LocationWithDetails } from '../types';
 
-export default function LocationList() {
+interface LocationListProps {
+    selectedArtists: string[];
+    selectedCounties: string[];
+}
+
+export default function LocationList({ selectedArtists, selectedCounties }: LocationListProps) {
     const [locations, setLocations] = useState<LocationWithDetails[]>([]);
 
     useEffect(() => {
@@ -29,7 +33,6 @@ export default function LocationList() {
             if (error) {
                 console.error('Error fetching locations:', error);
             } else {
-                // Transform the data to fit the component state structure
                 const transformedData = data.map((location) => ({
                     id: location.id,
                     name: location.name,
@@ -44,9 +47,15 @@ export default function LocationList() {
         fetchLocations();
     }, []);
 
+    const filteredLocations = locations.filter((location) => {
+        const matchesArtist = selectedArtists.length === 0 || selectedArtists.includes(location.artist);
+        const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county);
+        return matchesArtist && matchesCounty;
+    });
+
     return (
         <div>
-            {locations.map((location) => (
+            {filteredLocations.map((location) => (
                 <div key={location.id} className="mb-4 p-4 border rounded">
                     <img
                         src={location.thumbnail_url}

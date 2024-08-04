@@ -26,6 +26,7 @@ const MenuProps = {
 interface FilterBoxProps {
     tableName: 'artists' | 'counties';
     placeholder: string;
+    onFilterChange: (selected: string[]) => void;
 }
 
 interface Option {
@@ -33,7 +34,7 @@ interface Option {
     name: string;
 }
 
-export default function FilterBox({ tableName, placeholder }: FilterBoxProps) {
+export default function FilterBox({ tableName, placeholder, onFilterChange }: FilterBoxProps) {
     const [selected, setSelected] = useState<string[]>([]);
     const [options, setOptions] = useState<Option[]>([]);
     const theme = useTheme();
@@ -60,9 +61,9 @@ export default function FilterBox({ tableName, placeholder }: FilterBoxProps) {
         const {
             target: { value },
         } = event;
-        setSelected(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const selectedValues = typeof value === 'string' ? value.split(',') : value;
+        setSelected(selectedValues);
+        onFilterChange(selectedValues);
     };
 
     return (
