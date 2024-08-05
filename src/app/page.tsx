@@ -51,7 +51,7 @@ export default function Home() {
             <header className="w-full p-4 bg-white">
                 <h1 className="text-2xl md:text-4xl font-light font-montserrat italic">Stained Glass Map of Ireland</h1>
             </header>
-            <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'} overflow-hidden`}>
+            <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'} overflow-hidden pb-16`}> {/* Add padding-bottom */}
                 {!isMobile && (
                     <aside className="w-1/5 p-4 bg-gray-50 flex flex-col">
                         <div className="mb-4">
@@ -98,7 +98,7 @@ export default function Home() {
                     <Box
                         sx={{
                             width: 'auto',
-                            height: drawerOpen ? '75vh' : '20vh',
+                            height: drawerOpen ? '75vh' : '20vh', // Adjusted height
                             padding: '16px',
                         }}
                     >
