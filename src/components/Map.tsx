@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { supabase } from '../lib/supabase';
-import {BaseLocation, LocationWithDetails} from "@/types";
+import useFetchLocations from '../hooks/useFetchLocations';
+import { LocationWithDetails } from '@/types';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
-
 
 interface MapProps {
     selectedArtists: string[];
@@ -21,51 +20,8 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
     const [lng, setLng] = useState(-7.6921);
     const [lat, setLat] = useState(53.1424);
     const [zoom, setZoom] = useState(6);
-    const [locations, setLocations] = useState<LocationWithDetails[]>([]);
+    const { locations, error } = useFetchLocations();
     const markers = useRef<mapboxgl.Marker[]>([]);
-
-    useEffect(() => {
-        const fetchLocations = async () => {
-            const { data, error } = await supabase
-                .from('locations')
-                .select(`
-                    id,
-                    name,
-                    address,
-                    google_maps_link,
-                    latitude,
-                    longitude,
-                    counties (name),
-                    stained_glass_pieces (
-                        title,
-                        small_thumbnail_url,
-                        artists (name)
-                    )
-                `);
-            if (error) {
-                console.error('Error fetching locations:', error);
-            } else {
-                const transformedData = data.map((location: any) => ({
-                    id: location.id,
-                    name: location.name,
-                    address: location.address,
-                    google_maps_link: location.google_maps_link,
-                    thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                    county: location.counties.name, // Assuming counties is a single object
-                    stained_glass_pieces: location.stained_glass_pieces.map((piece: any) => ({
-                        ...piece,
-                        artist: piece.artists,  // Note: We need to explicitly map from artists (supabase) to artist (our type)
-                    })),
-                    artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
-                }));
-                setLocations(transformedData || []);
-            }
-        };
-
-        fetchLocations();
-    }, []);
 
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -126,6 +82,10 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
             }
         });
     }, [locations, selectedArtists, selectedCounties, onLocationClick]);
+
+    if (error) {
+        return <div>Error fetching locations: {error}</div>;
+    }
 
     return (
         <div className="h-full w-full">
