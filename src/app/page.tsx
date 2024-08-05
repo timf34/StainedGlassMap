@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
-import { SwipeableDrawer, Box, Divider, CssBaseline } from '@mui/material';
+import { SwipeableDrawer, Box, CssBaseline } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import Map from '../components/Map';
 import FilterBox from '../components/FilterBox';
@@ -15,6 +15,7 @@ import LoadingScreen from '../components/LoadingScreen';
 import { LocationWithDetails } from '@/types';
 
 const drawerBleeding = 30;
+const mapBottomPadding = 15; // Add this line
 
 const Root = styled('div')(({ theme }) => ({
     height: '100%',
@@ -114,7 +115,7 @@ export default function Home() {
                             </div>
                         </aside>
                     )}
-                    <section className={`flex-grow ${isMobile ? `h-[calc(100vh-${drawerBleeding}px-48px)]` : 'w-4/5'} p-2`}>
+                    <section className={`flex-grow ${isMobile ? `h-[calc(100vh-${drawerBleeding + mapBottomPadding}px-48px)]` : 'w-4/5'} p-2`}>
                         <Map
                             selectedArtists={selectedArtists}
                             selectedCounties={selectedCounties}
@@ -144,10 +145,10 @@ export default function Home() {
                                 right: 0,
                                 left: 0,
                                 backgroundColor: 'background.paper',
+                                height: drawerBleeding,
                             }}
                         >
                             <Puller />
-                            <Divider sx={{ width: '40px', margin: '20px auto 0' }} />
                         </StyledBox>
                         <StyledBox
                             sx={{
@@ -157,7 +158,7 @@ export default function Home() {
                                 overflow: 'auto',
                             }}
                         >
-                            <div className="mb-4">
+                            <div className="mb-4 pt-2">
                                 <FilterBox
                                     tableName="artists"
                                     placeholder="Filter by Artist"
