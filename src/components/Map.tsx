@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { supabase } from '../lib/supabase';
-import {Artist, Location, StainedGlassPiece, LocationWithDetails} from "@/types";
+import {BaseLocation, LocationWithDetails} from "@/types";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -21,7 +21,7 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
     const [lng, setLng] = useState(-7.6921);
     const [lat, setLat] = useState(53.1424);
     const [zoom, setZoom] = useState(6);
-    const [locations, setLocations] = useState<Location[]>([]);
+    const [locations, setLocations] = useState<LocationWithDetails[]>([]);
     const markers = useRef<mapboxgl.Marker[]>([]);
 
     useEffect(() => {
@@ -45,17 +45,17 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
             if (error) {
                 console.error('Error fetching locations:', error);
             } else {
-                const transformedData = data.map((location) => ({
+                const transformedData = data.map((location: any) => ({
                     id: location.id,
                     name: location.name,
-                    county: location.counties.name,
-                    stained_glass_pieces: location.stained_glass_pieces || [],
-                    artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
+                    address: location.address,
+                    google_maps_link: location.google_maps_link,
                     thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
                     latitude: location.latitude,
                     longitude: location.longitude,
-                    address: location.address,
-                    google_maps_link: location.google_maps_link,
+                    county: location.counties.name, // Assuming counties is a single object
+                    stained_glass_pieces: location.stained_glass_pieces,
+                    artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
                 }));
                 setLocations(transformedData || []);
             }
@@ -85,14 +85,14 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
 
         const filteredLocations = locations.filter((location) => {
             const matchesArtist = selectedArtists.length === 0 || selectedArtists.includes(location.artist);
-            const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county);
+            const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county.name);
             return matchesArtist && matchesCounty;
         });
 
         filteredLocations.forEach((location) => {
             if (location.longitude != null && location.latitude != null) {
                 const artistNames = location.stained_glass_pieces.flatMap(piece =>
-                    Array.isArray(piece.artists) ? piece.artists.map(artist => artist.name) : []
+                    Array.isArray(piece.artist) ? piece.artist.map(artist => artist.name) : []
                 );
                 const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
                     `<h3>${location.name}</h3>
@@ -100,7 +100,7 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
                     <a href="${location.google_maps_link}" target="_blank">View on Google Maps</a>
                     <div>
                         ${location.stained_glass_pieces.map(piece => `
-                            <div key="${piece.id}">
+                            <div>
                                 <img src="${piece.small_thumbnail_url}" alt="${piece.title}" width="100" />
                                 <p>${piece.title}</p>
                             </div>
