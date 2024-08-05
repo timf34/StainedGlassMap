@@ -42,10 +42,10 @@ export default function LocationList({ selectedArtists, selectedCounties, onLoca
                     thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
                     latitude: location.latitude,
                     longitude: location.longitude,
-                    county: location.counties.name, // Assuming counties is a single object
+                    county: location.counties.name,
                     stained_glass_pieces: location.stained_glass_pieces.map((piece: any) => ({
                         ...piece,
-                        artist: piece.artists,
+                        artist: piece.artists,  // Note: We need to explicitly map from artists (supabase) to artist (our type)
                     })),
                     artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
                 }));
