@@ -16,7 +16,17 @@ interface LocationModalProps {
 
 const LocationModal: React.FC<LocationModalProps> = ({ location, open, onClose }) => {
     const renderStainedGlassPieces = () => {
+        // TODO: I don't understand why but this is coming out like this:
+        // {
+        //     "title": "Ecce Homo",
+        //     "artists": {
+        //     "name": "Harry Clarke"
+        // },
+        //     "small_thumbnail_url": "https://i.imgur.com/9IcHsoC.jpeg"
+        // }
+        console.log(location)
         console.log("here now", location.stained_glass_pieces);
+        // TODO: Figure out why this is coming through as "artists" rather than artist to match our type
         const artists = Array.from(new Set(location.stained_glass_pieces.flatMap(piece => piece.artist.name)));
         return artists.map((artist, index) => (
             <div key={index}>

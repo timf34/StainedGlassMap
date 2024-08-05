@@ -54,7 +54,10 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
                     latitude: location.latitude,
                     longitude: location.longitude,
                     county: location.counties.name, // Assuming counties is a single object
-                    stained_glass_pieces: location.stained_glass_pieces,
+                    stained_glass_pieces: location.stained_glass_pieces.map((piece: any) => ({
+                        ...piece,
+                        artist: piece.artists,  // Note: We need to explicitly map from artists (supabase) to artist (our type)
+                    })),
                     artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
                 }));
                 setLocations(transformedData || []);
