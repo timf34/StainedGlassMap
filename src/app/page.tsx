@@ -7,6 +7,7 @@ import Map from '../components/Map';
 import FilterBox from '../components/FilterBox';
 import LocationList from '../components/LocationList';
 import LocationModal from '../components/LocationModal';
+import LoadingScreen from '../components/LoadingScreen';
 import { LocationWithDetails } from '@/types';
 import { SwipeableDrawer, Box, Divider } from '@mui/material';
 
@@ -52,7 +53,7 @@ export default function Home() {
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+    return <LoadingScreen />;
     }
 
     return (
