@@ -8,7 +8,7 @@ import FilterBox from '../components/FilterBox';
 import LocationList from '../components/LocationList';
 import LocationModal from '../components/LocationModal';
 import { LocationWithDetails } from '@/types';
-import { SwipeableDrawer, Box } from '@mui/material';
+import { SwipeableDrawer, Box, Divider } from '@mui/material';
 
 export default function Home() {
     const theme = useTheme();
@@ -16,7 +16,7 @@ export default function Home() {
     const [selectedArtists, setSelectedArtists] = useState<string[]>([]);
     const [selectedCounties, setSelectedCounties] = useState<string[]>([]);
     const [selectedLocation, setSelectedLocation] = useState<LocationWithDetails | null>(null);
-    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false); // Initial state to partially open
 
     const handleFilterChange = (type: 'artists' | 'counties', values: string[]) => {
         if (type === 'artists') {
@@ -35,7 +35,12 @@ export default function Home() {
     };
 
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-        if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            ((event as React.KeyboardEvent).key === 'Tab' ||
+                (event as React.KeyboardEvent).key === 'Shift')
+        ) {
             return;
         }
         setDrawerOpen(open);
@@ -84,14 +89,25 @@ export default function Home() {
                     open={drawerOpen}
                     onClose={toggleDrawer(false)}
                     onOpen={toggleDrawer(true)}
+                    disableSwipeToOpen={false}
+                    swipeAreaWidth={56} // This is the area in px that is always visible
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
+                    }}
                 >
                     <Box
                         sx={{
                             width: 'auto',
-                            height: '75vh',
+                            height: drawerOpen ? '75vh' : '20vh',
                             padding: '16px',
                         }}
                     >
+                        <div
+                            className="h-12 flex justify-center items-center cursor-pointer"
+                            onClick={toggleDrawer(!drawerOpen)}
+                        >
+                            <Divider sx={{ width: '40px', marginBottom: '8px' }} />
+                        </div>
                         <div className="mb-4">
                             <FilterBox
                                 tableName="artists"
