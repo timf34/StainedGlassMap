@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Map from '../components/Map';
@@ -16,7 +16,12 @@ export default function Home() {
     const [selectedArtists, setSelectedArtists] = useState<string[]>([]);
     const [selectedCounties, setSelectedCounties] = useState<string[]>([]);
     const [selectedLocation, setSelectedLocation] = useState<LocationWithDetails | null>(null);
-    const [drawerOpen, setDrawerOpen] = useState(false); // Initial state to partially open
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(false);
+    }, []);
 
     const handleFilterChange = (type: 'artists' | 'counties', values: string[]) => {
         if (type === 'artists') {
@@ -46,12 +51,16 @@ export default function Home() {
         setDrawerOpen(open);
     };
 
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <main className="h-screen flex flex-col">
             <header className="w-full p-4 bg-white">
                 <h1 className="text-2xl md:text-4xl font-light font-montserrat italic">Stained Glass Map of Ireland</h1>
             </header>
-            <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'} overflow-hidden pb-16`}> {/* Add padding-bottom */}
+            <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'} overflow-hidden pb-16`}>
                 {!isMobile && (
                     <aside className="w-1/5 p-4 bg-gray-50 flex flex-col">
                         <div className="mb-4">
@@ -75,7 +84,7 @@ export default function Home() {
                         </div>
                     </aside>
                 )}
-                <section className={`flex-grow ${isMobile ? 'h-[50vh]' : 'w-4/5'} p-4`}>
+                <section className={`flex-grow ${isMobile ? 'h-[calc(100vh-64px)]' : 'w-4/5'} p-4`}>
                     <Map
                         selectedArtists={selectedArtists}
                         selectedCounties={selectedCounties}
@@ -90,15 +99,15 @@ export default function Home() {
                     onClose={toggleDrawer(false)}
                     onOpen={toggleDrawer(true)}
                     disableSwipeToOpen={false}
-                    swipeAreaWidth={56} // This is the area in px that is always visible
+                    swipeAreaWidth={56}
                     ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
+                        keepMounted: true,
                     }}
                 >
                     <Box
                         sx={{
                             width: 'auto',
-                            height: drawerOpen ? '75vh' : '20vh', // Adjusted height
+                            height: drawerOpen ? '75vh' : '20vh',
                             padding: '16px',
                         }}
                     >
