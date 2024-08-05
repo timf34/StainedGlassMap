@@ -87,7 +87,7 @@ export default function Home() {
             />
             <main className="h-screen flex flex-col">
                 <header className="w-full p-2 bg-white">
-                    <h1 className="text-2xl md:text-4xl font-light font-montserrat italic">
+                    <h1 className="text-xl md:text-4xl font-light font-montserrat italic">
                         Stained Glass Map of Ireland
                     </h1>
                 </header>
