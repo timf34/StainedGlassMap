@@ -39,7 +39,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ location, open, onClose }
             <DialogContent>
                 <Typography variant="subtitle1">{location.address}</Typography>
                 <Typography variant="subtitle1">
-                    <a href={location.google_maps_link} target="_blank" rel="noopener noreferrer">View on Google Maps</a>
+                    <a href={location.google_maps_link} target="_blank" rel="noopener noreferrer" className={"text-gray-500 accent-blue-300 underline"}>View on Google Maps</a>
                 </Typography>
                 <div>
                     {renderStainedGlassPieces()}
