@@ -15,7 +15,7 @@ import LoadingScreen from '../components/LoadingScreen';
 import { LocationWithDetails } from '@/types';
 
 const drawerBleeding = 30;
-const mapBottomPadding = 15; // Add this line
+const mapBottomPadding = 30;
 
 const Root = styled('div')(({ theme }) => ({
     height: '100%',
@@ -115,7 +115,12 @@ export default function Home() {
                             </div>
                         </aside>
                     )}
-                    <section className={`flex-grow ${isMobile ? `h-[calc(100vh-${drawerBleeding + mapBottomPadding}px-48px)]` : 'w-4/5'} p-2`}>
+                    <section
+                        className={`flex-grow ${isMobile? ``: 'w-4/5'} p-2`}
+                        style={{
+                            marginBottom: isMobile ? `${mapBottomPadding}px` : '5',
+                        }}
+                    >
                         <Map
                             selectedArtists={selectedArtists}
                             selectedCounties={selectedCounties}
