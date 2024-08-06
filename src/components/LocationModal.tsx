@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import CloseIcon from '@mui/icons-material/Close';
+import { useMediaQuery } from '@mui/material';
 import { LocationWithDetails } from '../types';
 
 interface LocationModalProps {
@@ -15,6 +16,7 @@ interface LocationModalProps {
 }
 
 const LocationModal: React.FC<LocationModalProps> = ({ location, open, onClose }) => {
+    const isMobile = useMediaQuery('(max-width:600px)');
     const renderStainedGlassPieces = () => {
         const artists = Array.from(new Set(location.stained_glass_pieces.map(piece => piece.artist.name)));
         return artists.map((artist, index) => (
@@ -58,7 +60,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ location, open, onClose }
             transitionDuration={{ enter: 400, exit: 400 }}
         >
             <DialogTitle style={{ position: 'relative', paddingBottom: '1rem' }}>
-                <Typography variant="h5" style={{ fontWeight: 200 }}>
+                <Typography variant={isMobile ? 'h6' : 'h5'} style={{ fontWeight: 200 }}>
                     {location.name}
                 </Typography>
                 <IconButton
