@@ -58,13 +58,14 @@ const LocationModal: React.FC<LocationModalProps> = ({ location, open, onClose }
             transitionDuration={{ enter: 400, exit: 400 }}
         >
             <DialogTitle style={{ position: 'relative', paddingBottom: '1rem' }}>
-                {location.name}
+                <Typography variant="h5" style={{ fontWeight: 200 }}>
+                    {location.name}
+                </Typography>
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
                     style={{
                         position: 'absolute',
-                        fontSize: '4.5rem',
                         right: 8,
                         top: 8,
                         color: '#888'
