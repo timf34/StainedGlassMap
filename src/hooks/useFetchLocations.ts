@@ -20,6 +20,7 @@ export default function useFetchLocations() {
                     counties (name),
                     stained_glass_pieces (
                         title,
+                        year_created,
                         small_thumbnail_url,
                         artists (name)
                     )

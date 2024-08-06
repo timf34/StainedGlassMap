@@ -6,8 +6,10 @@ interface County {
     name: string;
 }
 
+// Add years to this!
 export interface StainedGlassPiece {
     title: string;
+    year_created: number;
     small_thumbnail_url: string;
     artist: Artist;
 }
