@@ -37,7 +37,9 @@ export default function useFetchLocations() {
                     thumbnail_url: location.stained_glass_pieces[0]?.small_thumbnail_url || '',
                     latitude: location.latitude,
                     longitude: location.longitude,
-                    county: location.counties.name, // Assuming counties is a single object
+                    county: {
+                        name: location.counties.name,
+                    },
                     stained_glass_pieces: location.stained_glass_pieces.map((piece: any) => ({
                         ...piece,
                         artist: piece.artists, // Map artists to artist
@@ -48,7 +50,6 @@ export default function useFetchLocations() {
                 setLocations(transformedData || []);
             }
         };
-
         fetchLocations();
     }, []);
 
