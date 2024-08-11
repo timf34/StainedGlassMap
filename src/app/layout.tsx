@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Stained Glass Map",
-  description: "Stained Glass Map, a way to find the best stained glass in Ireland.",
+  description: "Mapping the Irish stained glass ecosystem!",
   keywords: "stained glass, ireland, map, art",
   twitter: {
     site: "@TimFarrelly8",
