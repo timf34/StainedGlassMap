@@ -14,8 +14,8 @@ import LocationModal from '../components/LocationModal';
 import LoadingScreen from '../components/LoadingScreen';
 import { LocationWithDetails } from '@/types';
 
-const drawerBleeding = 30;
-const mapBottomPadding = 30;
+const drawerBleeding = 40;
+const mapBottomPadding = drawerBleeding;
 
 const Root = styled('div')(({ theme }) => ({
     height: '100%',
