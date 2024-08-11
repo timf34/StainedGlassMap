@@ -13,7 +13,7 @@ export default function LocationList({ selectedArtists, selectedCounties, onLoca
     const { locations, error } = useFetchLocations();
 
     const filteredLocations = locations.filter((location) => {
-        const matchesArtist = selectedArtists.length === 0 || selectedArtists.includes(location.artist);
+        const matchesArtist = selectedArtists.length === 0 || location.artists.some((artist) => selectedArtists.includes(artist));
         const matchesCounty = selectedCounties.length === 0 || selectedCounties.includes(location.county.name);
         return matchesArtist && matchesCounty;
     });
