@@ -30,23 +30,21 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
             open={open}
             onClose={onClose}
             maxWidth={false}
-            fullWidth
+            fullScreen
             PaperProps={{
                 style: {
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
+                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
                     overflow: 'hidden',
                 },
             }}
         >
             <DialogContent
                 style={{
-                    position: 'relative',
-                    padding: 0,
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    height: '100vh',
+                    height: '100%',
+                    padding: 0,
                 }}
             >
                 <IconButton
@@ -57,7 +55,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                         right: 16,
                         top: 16,
                         color: '#fff',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
                         zIndex: 1,
                     }}
                 >
@@ -68,14 +66,13 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                         src={loadedImageUrl}
                         alt={title}
                         style={{
-                            maxWidth: '90%',
-                            maxHeight: '90vh',
+                            maxWidth: '95%',
+                            maxHeight: '95%',
                             objectFit: 'contain',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
                         }}
                     />
                 ) : (
-                    <CircularProgress />
+                    <CircularProgress style={{ color: '#fff' }} />
                 )}
             </DialogContent>
         </Dialog>

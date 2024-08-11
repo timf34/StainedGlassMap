@@ -85,7 +85,7 @@ export default function Home() {
                     },
                 }}
             />
-            <main className="h-screen flex flex-col">
+            <main className="h-screen flex flex-col overflow-hidden">
                 <header className="w-full p-2 bg-white">
                     <h1 className="text-xl md:text-4xl font-light font-montserrat italic">
                         Stained Glass Map of Ireland

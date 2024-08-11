@@ -23,6 +23,10 @@ const LocationModal: React.FC<LocationModalProps> = ({location, open, onClose}) 
     const handleImageClick = (url: string, title: string) => {
         setSelectedImage({url, title});
     };
+    // I don't think the below is entirely necessary... will come back to this
+    const handleCloseImageModal = () => {
+        setSelectedImage(null);
+    };
 
     const renderStainedGlassPieces = () => {
         const artists = Array.from(new Set(location.stained_glass_pieces.map(piece => piece.artist.name)));
@@ -72,10 +76,12 @@ const LocationModal: React.FC<LocationModalProps> = ({location, open, onClose}) 
                         padding: '2rem',
                         borderRadius: '12px',
                         boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                        background: '#fafafa'
+                        background: '#fafafa',
+                        overflowY: 'auto',
+                        maxHeight: '90vh',
                     }
                 }}
-                transitionDuration={{enter: 400, exit: 400}}
+                transitionDuration={{ enter: 400, exit: 400 }}
             >
                 <DialogTitle style={{position: 'relative', paddingBottom: '1rem'}}>
                     <Typography variant={isMobile ? 'h6' : 'h5'} style={{fontWeight: 200}}>
@@ -111,16 +117,12 @@ const LocationModal: React.FC<LocationModalProps> = ({location, open, onClose}) 
                     {renderStainedGlassPieces()}
                 </DialogContent>
             </Dialog>
-            {
-                selectedImage && (
-                    <ImageModal
-                        open={!!selectedImage}
-                        onClose={() => setSelectedImage(null)}
-                        imageUrl={selectedImage.url}
-                        title={selectedImage.title}
-                    />
-                )
-            }
+            <ImageModal
+                open={!!selectedImage}
+                onClose={handleCloseImageModal}
+                imageUrl={selectedImage?.url || ''}
+                title={selectedImage?.title || ''}
+            />
         </>
     )
         ;
