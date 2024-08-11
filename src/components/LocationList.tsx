@@ -32,7 +32,7 @@ export default function LocationList({ selectedArtists, selectedCounties, onLoca
                         className="w-full h-40 object-cover mb-2"
                     />
                     <h3 className="font-bold">{location.name}</h3>
-                    <p>{location.artist}</p>
+                    <p>{location.artists.join(', ')}</p>
                     <p>{location.county.name}</p>
                 </div>
             ))}

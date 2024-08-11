@@ -26,7 +26,6 @@ export interface BaseLocation {
 }
 
 export interface LocationWithDetails extends BaseLocation {
-    // TODO: We'll change this to an array soon, to store multiple artists
     thumbnail_url: string,  // We'll also leave this here for now... just getting the url for the first stained glass piece to show
-    artist: string;  // Leave this here, even though its contained in stained_glass_pices, for simplicity
+    artists: string[]; // Store an array of artists names
 }

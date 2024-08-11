@@ -42,8 +42,9 @@ export default function useFetchLocations() {
                         ...piece,
                         artist: piece.artists, // Map artists to artist
                     })),
-                    artist: location.stained_glass_pieces[0]?.artists.name || 'Unknown Artist',
+                    artists: location.stained_glass_pieces.map((piece: any) => piece.artists.name) || 'Unknown Artist',
                 }));
+
                 setLocations(transformedData || []);
             }
         };
