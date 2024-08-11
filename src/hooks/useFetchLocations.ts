@@ -44,7 +44,7 @@ export default function useFetchLocations() {
                         ...piece,
                         artist: piece.artists, // Map artists to artist
                     })),
-                    artists: Array.from(new Set(location.stained_glass_pieces.map((piece: any) => piece.artists.name))) || 'Unknown Artist',
+                    artists: Array.from(new Set(location.stained_glass_pieces.map((piece: any) => piece.artists.name))) as string[] || 'Unknown Artist',
                 }));
 
                 setLocations(transformedData || []);
