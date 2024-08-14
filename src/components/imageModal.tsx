@@ -3,7 +3,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import CircularProgress from '@mui/material/CircularProgress';
 
 interface ImageModalProps {
     open: boolean;
@@ -13,18 +12,6 @@ interface ImageModalProps {
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title }) => {
-    const [loadedImageUrl, setLoadedImageUrl] = useState('');
-
-    useEffect(() => {
-        if (open) {
-            const img = new Image();
-            img.src = imageUrl;
-            img.onload = () => setLoadedImageUrl(imageUrl);
-        } else {
-            setLoadedImageUrl('');
-        }
-    }, [open, imageUrl]);
-
     return (
         <Dialog
             open={open}
@@ -38,42 +25,30 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                 },
             }}
         >
-            <DialogContent
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '100%',
-                    padding: 0,
-                }}
-            >
+            <DialogContent style={{ position: 'relative', padding: 0 }}>
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
                     style={{
                         position: 'absolute',
-                        right: 16,
-                        top: 16,
+                        right: 8,
+                        top: 8,
                         color: '#fff',
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                        zIndex: 1,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
                     }}
                 >
                     <CloseIcon />
                 </IconButton>
-                {loadedImageUrl ? (
-                    <img
-                        src={loadedImageUrl}
-                        alt={title}
-                        style={{
-                            maxWidth: '95%',
-                            maxHeight: '95%',
-                            objectFit: 'contain',
-                        }}
-                    />
-                ) : (
-                    <CircularProgress style={{ color: '#fff' }} />
-                )}
+                <img
+                    src={imageUrl}
+                    alt={title}
+                    style={{
+                        display: 'block',
+                        margin: 'auto',
+                        maxHeight: '100vh',
+                        maxWidth: '100vw',
+                    }}
+                    ></img>
             </DialogContent>
         </Dialog>
     );

@@ -76,12 +76,10 @@ const LocationModal: React.FC<LocationModalProps> = ({location, open, onClose}) 
                         padding: '2rem',
                         borderRadius: '12px',
                         boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                        background: '#fafafa',
-                        overflowY: 'auto',
-                        maxHeight: '90vh',
+                        background: '#fafafa'
                     }
                 }}
-                transitionDuration={{ enter: 400, exit: 400 }}
+                transitionDuration={{enter: 400, exit: 400}}
             >
                 <DialogTitle style={{position: 'relative', paddingBottom: '1rem'}}>
                     <Typography variant={isMobile ? 'h6' : 'h5'} style={{fontWeight: 200}}>
@@ -117,12 +115,16 @@ const LocationModal: React.FC<LocationModalProps> = ({location, open, onClose}) 
                     {renderStainedGlassPieces()}
                 </DialogContent>
             </Dialog>
-            <ImageModal
-                open={!!selectedImage}
-                onClose={handleCloseImageModal}
-                imageUrl={selectedImage?.url || ''}
-                title={selectedImage?.title || ''}
-            />
+            {
+                selectedImage && (
+                    <ImageModal
+                        open={!!selectedImage}
+                        onClose={() => setSelectedImage(null)}
+                        imageUrl={selectedImage.url}
+                        title={selectedImage.title}
+                    />
+                )
+            }
         </>
     )
         ;
