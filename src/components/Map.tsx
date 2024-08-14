@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import useFetchLocations from '../hooks/useFetchLocations';
 import { LocationWithDetails } from '@/types';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -12,9 +13,10 @@ interface MapProps {
     selectedArtists: string[];
     selectedCounties: string[];
     onLocationClick: (location: LocationWithDetails) => void;
+    isMobile: boolean;
 }
 
-export default function Map({ selectedArtists, selectedCounties, onLocationClick }: MapProps) {
+export default function Map({ selectedArtists, selectedCounties, onLocationClick, isMobile }: MapProps) {
     const mapContainer = useRef(null);
     const map = useRef<mapboxgl.Map | null>(null);
     const [lng, setLng] = useState(-7.6921);
@@ -89,7 +91,7 @@ export default function Map({ selectedArtists, selectedCounties, onLocationClick
 
     return (
         <div className="h-full w-full">
-            <div ref={mapContainer} className="map-container w-full h-full rounded-xl shadow-xl" />
+            <div ref={mapContainer} className={`map-container w-full h-full ${isMobile ? '' : 'rounded-xl shadow-xl'}`} />
         </div>
     );
 }
