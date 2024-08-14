@@ -25,6 +25,7 @@ const Root = styled('div')(({ theme }) => ({
 
 const StyledBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
+    boxShadow: '0px -2px 8px rgba(0, 0, 0, 0.2)',
 }));
 
 const Puller = styled(Box)(({ theme }) => ({
@@ -144,14 +145,14 @@ export default function Home() {
                         <StyledBox
                             sx={{
                                 position: 'absolute',
-                                top: -drawerBleeding,
-                                borderTopLeftRadius: 16,
-                                borderTopRightRadius: 16,
+                                top: -drawerBleeding - 2, // -2 so there's a slight overlay to help account for radius
+                                borderTopLeftRadius: 8,
+                                borderTopRightRadius: 8,
                                 visibility: 'visible',
                                 right: 0,
                                 left: 0,
                                 backgroundColor: 'background.paper',
-                                height: drawerBleeding,
+                                height: drawerBleeding + 2  ,
                             }}
                         >
                             <Puller />
