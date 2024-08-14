@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
@@ -25,7 +25,16 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                 },
             }}
         >
-            <DialogContent style={{ position: 'relative', padding: 0 }}>
+            <DialogContent
+                style={{
+                    position: 'relative',
+                    padding: 0,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100vh', // Ensures the content is centered vertically
+                }}
+            >
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
@@ -44,11 +53,11 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                     alt={title}
                     style={{
                         display: 'block',
+                        maxHeight: '100%',
+                        maxWidth: '100%',
                         margin: 'auto',
-                        maxHeight: '100vh',
-                        maxWidth: '100vw',
                     }}
-                    ></img>
+                />
             </DialogContent>
         </Dialog>
     );
