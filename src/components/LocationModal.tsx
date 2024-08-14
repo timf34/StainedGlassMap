@@ -119,7 +119,7 @@ const LocationModal: React.FC<LocationModalProps> = ({location, open, onClose}) 
                 selectedImage && (
                     <ImageModal
                         open={!!selectedImage}
-                        onClose={() => setSelectedImage(null)}
+                        onClose={handleCloseImageModal}
                         imageUrl={selectedImage.url}
                         title={selectedImage.title}
                     />

@@ -1,6 +1,6 @@
 import React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -13,26 +13,27 @@ interface ImageModalProps {
 
 const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title }) => {
     return (
-        <Dialog
+        <Modal
             open={open}
             onClose={onClose}
-            maxWidth={false}
-            fullScreen
-            PaperProps={{
-                style: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    overflow: 'hidden',
-                },
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
             }}
         >
-            <DialogContent
+            <Box
+                onClick={onClose} // Close modal when clicking outside the image
                 style={{
                     position: 'relative',
-                    padding: 0,
+                    outline: 'none',
+                    maxWidth: '90%',
+                    maxHeight: '90%',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    height: '100vh', // Ensures the content is centered vertically
+                    cursor: 'pointer',
                 }}
             >
                 <IconButton
@@ -40,10 +41,11 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                     onClick={onClose}
                     style={{
                         position: 'absolute',
-                        right: 8,
-                        top: 8,
+                        right: 16,
+                        top: 16,
                         color: '#fff',
                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        zIndex: 2,
                     }}
                 >
                     <CloseIcon />
@@ -51,15 +53,15 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                 <img
                     src={imageUrl}
                     alt={title}
+                    onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on the image
                     style={{
-                        display: 'block',
-                        maxHeight: '100%',
-                        maxWidth: '100%',
-                        margin: 'auto',
+                        maxWidth: '90%',
+                        maxHeight: '90%',
+                        cursor: 'default',
                     }}
                 />
-            </DialogContent>
-        </Dialog>
+            </Box>
+        </Modal>
     );
 };
 
