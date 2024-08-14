@@ -24,16 +24,19 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
             }}
         >
             <Box
-                onClick={onClose} // Close modal when clicking outside the image
+                onClick={onClose}
                 style={{
                     position: 'relative',
                     outline: 'none',
-                    maxWidth: '90%',
-                    maxHeight: '90%',
+                    width: '90vw',
+                    height: '90vh',
+                    maxWidth: '90vw',
+                    maxHeight: '90vh',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     cursor: 'pointer',
+                    overflow: 'hidden', // Ensure content doesn't overflow the box
                 }}
             >
                 <IconButton
@@ -53,10 +56,11 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                 <img
                     src={imageUrl}
                     alt={title}
-                    onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on the image
+                    onClick={(e) => e.stopPropagation()}
                     style={{
-                        maxWidth: '90%',
-                        maxHeight: '90%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        objectFit: 'contain',
                         cursor: 'default',
                     }}
                 />
