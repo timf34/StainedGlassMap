@@ -5,7 +5,6 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import useFetchLocations from '../hooks/useFetchLocations';
 import { LocationWithDetails } from '@/types';
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 

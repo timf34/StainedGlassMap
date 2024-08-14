@@ -116,7 +116,7 @@ export default function Home() {
                         </aside>
                     )}
                     <section
-                        className={`flex-grow ${isMobile? ``: 'w-4/5'} p-2 `}
+                        className={`flex-grow ${isMobile? ``: 'w-4/5 p-2'}`}
                         style={{
                             marginBottom: isMobile ? `${mapBottomPadding}px` : '5',
                         }}
