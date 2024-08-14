@@ -24,19 +24,15 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
             }}
         >
             <Box
-                onClick={onClose}
                 style={{
-                    position: 'relative',
-                    outline: 'none',
-                    width: '90vw',
-                    height: '90vh',
-                    maxWidth: '90vw',
-                    maxHeight: '90vh',
+                    position: 'fixed',
+                    top: 0,
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    cursor: 'pointer',
-                    overflow: 'hidden', // Ensure content doesn't overflow the box
                 }}
             >
                 <IconButton
@@ -53,17 +49,32 @@ const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, imageUrl, title 
                 >
                     <CloseIcon />
                 </IconButton>
-                <img
-                    src={imageUrl}
-                    alt={title}
-                    onClick={(e) => e.stopPropagation()}
+                <Box
+                    onClick={onClose}
                     style={{
-                        maxWidth: '100%',
-                        maxHeight: '100%',
-                        objectFit: 'contain',
-                        cursor: 'default',
+                        width: '90vw',
+                        height: '90vh',
+                        maxWidth: '90vw',
+                        maxHeight: '90vh',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        overflow: 'hidden',
                     }}
-                />
+                >
+                    <img
+                        src={imageUrl}
+                        alt={title}
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                            objectFit: 'contain',
+                            cursor: 'default',
+                        }}
+                    />
+                </Box>
             </Box>
         </Modal>
     );
