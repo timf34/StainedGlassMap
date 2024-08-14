@@ -36,7 +36,7 @@ export default function RootLayout({
 
         {/* Open Graph Meta Tags */}
         <meta property="og:title" content="Stained Glass Map" />
-        <meta property="og:description" content="Stained Glass Map, a way to find the best stained glass in Ireland." />
+        <meta property="og:description" content="Mapping the Irish stained glass ecosystem!" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://stainedglassmap.com" />
         <meta property="og:image" content="https://stainedglassmap.com/favicon/android-chrome-192x192.png" />

@@ -1,7 +1,7 @@
 {
   "short_name": "SGMap",
   "name": "Stained Glass Map",
-  "description": "A way to find the best stained glass in Ireland.",
+  "description": "Mapping the Irish stained glass ecosystem!",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
