@@ -5,6 +5,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { StainedGlassPiece } from '../types';
 import StainedGlassImage from './ModalStainedGlassImage';
+import { Box } from '@mui/material';
 
 interface ArtistSectionProps {
     artist: string;
@@ -27,17 +28,19 @@ const ArtistSection: React.FC<ArtistSectionProps> = ({ artist, pieces, onImageCl
     };
 
     return (
-        <div style={{ marginBottom: '2rem' }}>
-            <Typography variant="h5" gutterBottom>{artist}</Typography>
-            <div style={{ position: 'relative' }}>
-                <div
+        <Box sx={{ marginBottom: '1rem' }}>
+            <Typography variant="h5" gutterBottom sx={{ paddingLeft: '16px' }}>{artist}</Typography>
+            <Box sx={{ position: 'relative' }}>
+                <Box
                     ref={scrollContainerRef}
-                    style={{
+                    sx={{
                         display: 'flex',
                         overflowX: 'auto',
                         scrollbarWidth: 'none',
                         msOverflowStyle: 'none',
-                        '&::-webkit-scrollbar': { display: 'none' }
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        paddingLeft: '16px',  // Align with the artist name
+                        paddingRight: '16px', // Balance the layout
                     }}
                 >
                     {pieces.map(piece => (
@@ -47,22 +50,36 @@ const ArtistSection: React.FC<ArtistSectionProps> = ({ artist, pieces, onImageCl
                             onClick={() => onImageClick(piece.small_thumbnail_url, piece.title)}
                         />
                     ))}
-                </div>
+                </Box>
                 <IconButton
                     onClick={() => scroll('left')}
-                    style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)' }}
+                    sx={{
+                        position: 'absolute',
+                        left: 0,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                        '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.9)' },
+                    }}
                 >
                     <ChevronLeftIcon />
                 </IconButton>
                 <IconButton
                     onClick={() => scroll('right')}
-                    style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)' }}
+                    sx={{
+                        position: 'absolute',
+                        right: 0,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                        '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.9)' },
+                    }}
                 >
                     <ChevronRightIcon />
                 </IconButton>
-            </div>
-            {!isLastSection && <hr style={{ margin: '2rem 0', border: 'none', borderTop: '1px solid #eee' }} />}
-        </div>
+            </Box>
+            {!isLastSection && <Box sx={{ margin: '2rem 16px', borderTop: '1px solid #eee' }} />}
+        </Box>
     );
 };
 
