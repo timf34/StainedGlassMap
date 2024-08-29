@@ -19,7 +19,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ location, isMobile }) => {
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
             <div>
-                <Typography variant={isMobile ? 'h6' : 'h5'} style={{ fontWeight: 200 }}>
+                <Typography variant={isMobile ? 'h6' : 'h4'} style={{ fontWeight: 700 }}>
                     {location.name}
                 </Typography>
                 <Typography variant="subtitle1">
