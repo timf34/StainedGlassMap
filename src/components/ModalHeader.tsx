@@ -25,7 +25,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ location, isMobile }) => {
                 <Typography variant="subtitle1" sx={{ color: 'gray', marginRight: '0.5rem' }}>
                     Address:
                 </Typography>
-                <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
+                <Typography variant="subtitle1" sx={{ marginRight: '16px' }}>
                     {location.address}
                 </Typography>
                 <IconButton onClick={handleCopyAddress} size="small" aria-label="copy to clipboard">
