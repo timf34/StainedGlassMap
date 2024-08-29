@@ -2,7 +2,9 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { createTheme } from '@mui/material/styles';
 import { LocationWithDetails } from '../types';
+import { Box } from '@mui/material';
 
 interface ModalHeaderProps {
     location: LocationWithDetails;
@@ -14,25 +16,46 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ location, isMobile }) => {
         navigator.clipboard.writeText(location.address);
     };
 
+    const theme = createTheme({
+        typography: {
+            body2: {
+                fontSize: 12,
+            },
+        },
+    });
+
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '1rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant={isMobile ? 'h6' : 'h4'} sx={{ fontWeight: 700 }}>
-                    {location.name}
-                </Typography>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                <Typography variant="subtitle1" sx={{ color: 'gray', marginRight: '0.5rem' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: '1rem' }}>
+            <Typography variant={isMobile ? 'h6' : 'h4'} sx={{ fontWeight: 700, marginBottom: '0.5rem' }}>
+                {location.name}
+            </Typography>
+
+            <Box sx={{
+                display: 'grid',
+                gridTemplateColumns: 'auto 1fr auto',
+                alignItems: 'start',
+                gap: '0.5rem',
+                marginBottom: '0.5rem'
+            }}>
+                <Typography variant="body2" sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
                     Address:
                 </Typography>
-                <Typography variant="subtitle1" sx={{ marginRight: '16px' }}>
+                <Typography variant="body2" sx={{ overflowWrap: 'break-word', wordWrap: 'break-word', hyphens: 'auto' }}
+                >
                     {location.address}
                 </Typography>
-                <IconButton onClick={handleCopyAddress} size="small" aria-label="copy to clipboard">
+
+                <IconButton
+                    onClick={handleCopyAddress}
+                    size="small"
+                    aria-label="copy to clipboard"
+                    sx={{ padding: '0' }}
+                >
                     <ContentCopyIcon fontSize="small" />
                 </IconButton>
-            </div>
-            <Typography variant="subtitle1">
+            </Box>
+
+            <Typography variant="body2">
                 <a
                     href={location.google_maps_link}
                     target="_blank"
@@ -42,7 +65,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ location, isMobile }) => {
                     Google Maps Link
                 </a>
             </Typography>
-        </div>
+        </Box>
     );
 };
 
