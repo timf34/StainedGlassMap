@@ -65,7 +65,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ location, isMobile }) => {
                     aria-label="copy to clipboard"
                     sx={{ padding: '0' }}
                 >
-                    <ContentCopyIcon fontSize="xsmall" />
+                    <ContentCopyIcon sx={{ fontSize: '16px' }} />
                 </IconButton>
             </Box>
 
