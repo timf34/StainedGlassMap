@@ -29,7 +29,7 @@ const ArtistSection: React.FC<ArtistSectionProps> = ({ artist, pieces, onImageCl
 
     return (
         <Box sx={{ marginBottom: '1rem' }}>
-            <Typography variant="h5" gutterBottom sx={{ paddingLeft: '16px' }}>{artist}</Typography>
+            <Typography variant="h5" gutterBottom>{artist}</Typography>
             <Box sx={{ position: 'relative' }}>
                 <Box
                     ref={scrollContainerRef}
@@ -39,8 +39,6 @@ const ArtistSection: React.FC<ArtistSectionProps> = ({ artist, pieces, onImageCl
                         scrollbarWidth: 'none',
                         msOverflowStyle: 'none',
                         '&::-webkit-scrollbar': { display: 'none' },
-                        paddingLeft: '16px',  // Align with the artist name
-                        paddingRight: '16px', // Balance the layout
                     }}
                 >
                     {pieces.map(piece => (
@@ -78,7 +76,7 @@ const ArtistSection: React.FC<ArtistSectionProps> = ({ artist, pieces, onImageCl
                     <ChevronRightIcon />
                 </IconButton>
             </Box>
-            {!isLastSection && <Box sx={{ margin: '2rem 16px', borderTop: '1px solid #eee' }} />}
+            {!isLastSection && <Box sx={{ margin: '1rem 0', borderTop: '1px solid #eee' }} />}
         </Box>
     );
 };

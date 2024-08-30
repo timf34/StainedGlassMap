@@ -59,7 +59,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ location, open, onClose }
                     <CloseIcon />
                 </IconButton>
                 <ModalHeader location={location} isMobile={isMobile} />
-                <DialogContent dividers style={{ paddingTop: 0 }}>
+                <DialogContent dividers style={{ padding: 0 }}>
                     {artists.map((artist, index) => (
                         <ArtistSection
                             key={artist}
