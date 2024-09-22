@@ -104,12 +104,32 @@ export default function Home() {
                         Stained Glass Map of Ireland
                     </h1>
                     <Button 
-                        variant="outlined" 
+                        variant={isMobile ? "text" : "outlined"}
                         onClick={handleOpenAbout}
                         size={isMobile ? "small" : "small"}
-                        sx={{ marginRight: '20px' }}
+                        sx={{ 
+                            marginLeft: 'auto',
+                            minWidth: isMobile ? '30px' : 'auto',
+                            padding: isMobile ? '6px' : 'auto',
+                            marginRight: isMobile ? '0px' : '16px',
+                            color: 'grey',
+                            borderColor: isMobile ? 'transparent' : 'grey',
+                            border: isMobile ? 'none' : '1px solid',
+                            '&:hover': {
+                                backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                                borderColor: isMobile ? 'transparent' : 'darkgrey',
+                            },
+                            '&:focus': {
+                                outline: isMobile ? 'none' : '2px solid #4a90e2',
+                                outlineOffset: isMobile ? '0' : '2px',
+                            },
+                        }}
                     >
-                        About
+                        {isMobile ? (
+                            <InfoOutlinedIcon fontSize="small" />
+                        ) : (
+                            "About"
+                        )}
                     </Button>
                 </header>
                 <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'} overflow-hidden`}>
