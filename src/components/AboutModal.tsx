@@ -48,10 +48,18 @@ const AboutModal: React.FC<AboutModalProps> = ({ open, onClose }) => {
                 </IconButton>
 
                 <Typography id="about-modal-title" variant="h6" component="h2" textAlign="center">
-                    About the Stained Glass Map
+                    About
                 </Typography>
                 <Typography sx={{ mt: 2 }} textAlign="center">
-                    This map was built to make it easier for people to discover and explore notable stained glass locations across Ireland, particularly focusing on artists like Harry Clarke, Evie Hone, and Michael Healy. It's a centralized resource for art lovers and historians to learn more about the country's rich history in stained glass art.
+                    StainedGlassMap.com is a passion project by <a href="https://timfarrelly.com" target="_blank" style={{ fontStyle: 'italic' }}>Tim Farrelly</a>, 
+                    and an attempt to map out the Irish stained glass ecosystem. 
+                    <br /><br />
+                    The best paintings are consolidated in the public galleries, but the best stained glass is a different story. 
+                    They're often tucked away in churches or other buildings, and not everyone has the luck to stumble upon them! 
+                    This map is an attempt to change that. 
+                    <br /><br />
+                    Currently we are indexing the data by hand, but we'll soon create a crowdsourcing mechanism to allow users to 
+                    add stained glass you come across!
                 </Typography>
             </Box>
         </Modal>
