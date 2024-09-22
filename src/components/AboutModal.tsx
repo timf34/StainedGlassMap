@@ -51,7 +51,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ open, onClose }) => {
                     About
                 </Typography>
                 <Typography sx={{ mt: 2 }} textAlign="center">
-                    StainedGlassMap.com is a passion project by <a href="https://timfarrelly.com" target="_blank" style={{ fontStyle: 'italic' }}>Tim Farrelly</a>, 
+                    StainedGlassMap.com is a passion project by <a href="https://timfarrelly.com" target="_blank" style={{ fontStyle: 'italic', color: "#74b6c4" }}>Tim Farrelly</a>,
                     and an attempt to map out the Irish stained glass ecosystem. 
                     <br /><br />
                     The best paintings are consolidated in the public galleries, but the best stained glass is a different story. 
