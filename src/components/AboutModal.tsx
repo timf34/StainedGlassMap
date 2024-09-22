@@ -55,10 +55,10 @@ const AboutModal: React.FC<AboutModalProps> = ({ open, onClose }) => {
                     and an attempt to map out the Irish stained glass ecosystem. 
                     <br /><br />
                     The best paintings are consolidated in the public galleries, but the best stained glass is a different story. 
-                    They're often tucked away in churches or other buildings, and not everyone has the luck to stumble upon them! 
+                    They&#39;re often tucked away in churches or other buildings, and not everyone has the luck to stumble upon them!
                     This map is an attempt to change that. 
                     <br /><br />
-                    Currently we are indexing the data by hand, but we'll soon create a crowdsourcing mechanism to allow users to 
+                    Currently we are indexing the data by hand, but we&#39;ll soon create a crowdsourcing mechanism to allow users to
                     add stained glass you come across!
                 </Typography>
             </Box>
