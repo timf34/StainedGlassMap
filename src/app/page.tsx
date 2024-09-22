@@ -12,6 +12,9 @@ import FilterBox from '../components/FilterBox';
 import LocationList from '../components/LocationList';
 import LocationModal from '../components/LocationModal';
 import LoadingScreen from '../components/LoadingScreen';
+import AboutModal from '../components/AboutModal';
+import { Button } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { LocationWithDetails } from '@/types';
 
 const drawerBleeding = 40;
@@ -46,6 +49,7 @@ export default function Home() {
     const [selectedLocation, setSelectedLocation] = useState<LocationWithDetails | null>(null);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isAboutOpen, setIsAboutOpen] = useState(false);
 
     useEffect(() => {
         setIsLoading(false);
@@ -71,6 +75,14 @@ export default function Home() {
         setOpen(newOpen);
     };
 
+    const handleOpenAbout = () => {
+        setIsAboutOpen(true);
+    };
+
+    const handleCloseAbout = () => {
+        setIsAboutOpen(false);
+    };
+
     if (isLoading) {
         return <LoadingScreen />;
     }
@@ -87,10 +99,18 @@ export default function Home() {
                 }}
             />
             <main className="h-screen flex flex-col overflow-hidden">
-                <header className="w-full p-2 bg-white">
+                <header className="w-full p-2 bg-white flex justify-between items-center">
                     <h1 className="text-xl md:text-4xl font-light font-montserrat italic">
                         Stained Glass Map of Ireland
                     </h1>
+                    <Button 
+                        variant="outlined" 
+                        onClick={handleOpenAbout}
+                        size={isMobile ? "small" : "small"}
+                        sx={{ marginRight: '20px' }}
+                    >
+                        About
+                    </Button>
                 </header>
                 <div className={`flex flex-grow ${isMobile ? 'flex-col' : 'flex-row'} overflow-hidden`}>
                     {!isMobile && (
@@ -194,6 +214,7 @@ export default function Home() {
                         onClose={handleCloseModal}
                     />
                 )}
+                <AboutModal open={isAboutOpen} onClose={handleCloseAbout} />
             </main>
         </Root>
     );
